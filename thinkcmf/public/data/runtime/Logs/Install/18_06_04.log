@@ -1,0 +1,9 @@
+[ 2018-06-04T10:07:19+08:00 ] 180.167.76.50 /index.php?g=install&a=testdbpwd
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000104s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000275s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000039s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000542s ]
+NOTIC: [8] Undefined index: db_name /www/web/game_junjunit_cn/public_html/simplewind/Core/Library/Think/Db.class.php 第 68 行.
+SQL: show databases; [ RunTime:0.0008s ]
+

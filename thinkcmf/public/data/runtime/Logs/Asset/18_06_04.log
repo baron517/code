@@ -1,0 +1,57 @@
+[ 2018-06-04T11:24:54+08:00 ] 180.167.76.50 /index.php?g=Asset&m=Ueditor&a=upload&action=config&&noCache=1528082672473
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.000264s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000389s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000050s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000153s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000053s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000331s ]
+SQL: SHOW COLUMNS FROM `tb_options` [ RunTime:0.0007s ]
+SQL: SELECT `option_value` FROM `tb_options` WHERE `option_name` = 'upload_setting' LIMIT 1   [ RunTime:0.0002s ]
+
+[ 2018-06-04T11:28:07+08:00 ] 180.167.76.50 /index.php?g=Asset&m=Ueditor&a=upload&action=config&&noCache=1528082871254
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.000263s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000397s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000076s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000251s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000058s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000480s ]
+
+[ 2018-06-04T11:28:52+08:00 ] 180.167.76.50 /index.php?g=Asset&m=Ueditor&a=upload&action=config&&noCache=1528082915987
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.000421s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000694s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000100s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000237s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000125s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000661s ]
+
+[ 2018-06-04T11:28:59+08:00 ] 180.167.76.50 /index.php?g=Asset&m=Ueditor&a=upload&action=config&&noCache=1528082923327
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000025s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.000373s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000560s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000091s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000204s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000051s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000421s ]
+
+[ 2018-06-04T11:29:16+08:00 ] 180.167.76.50 /index.php?g=Asset&m=Ueditor&a=upload&action=config&&noCache=1528082939673
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.000181s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000281s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000035s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000139s ]
+INFO: Run Common\Behavior\UrldecodeGetBehavior [ RunTime:0.000046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000270s ]
+

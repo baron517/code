@@ -66,13 +66,18 @@ function sp_get_current_userid(){
 	return get_current_userid();
 }
 
+
 /**
  * 返回带协议的域名
  */
 function sp_get_host(){
 	$host=$_SERVER["HTTP_HOST"];
-	$protocol=is_ssl()?"https://":"http://";
+	//$protocol=is_https()?"https://":"http://";
+	
+    $protocol="https://";
+	
 	return $protocol.$host;
+	
 }
 
 /**
@@ -934,7 +939,10 @@ function sp_get_image_url($file,$style=''){
  * @return string
  */
 function sp_get_image_preview_url($file,$style='watermark'){
-    if(C('FILE_UPLOAD_TYPE')=='Qiniu'){
+    
+    if($file)
+    {
+        if(C('FILE_UPLOAD_TYPE')=='Qiniu'){
         $storage_setting=sp_get_cmf_settings('storage');
         $qiniu_setting=$storage_setting['Qiniu']['setting'];
         $filepath=$qiniu_setting['protocol'].'://'.$storage_setting['Qiniu']['domain']."/".$file;
@@ -945,9 +953,15 @@ function sp_get_image_preview_url($file,$style='watermark'){
         
         return $url;
         
-    }else{
-        return sp_get_asset_upload_path($file,false);
+        }else{
+            return sp_get_asset_upload_path($file,false);
+        }
     }
+    else{
+        return "";
+    }
+    
+    
 }
 
 /**

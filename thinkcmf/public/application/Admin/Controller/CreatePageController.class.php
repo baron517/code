@@ -60,6 +60,7 @@ class CreatePageController extends AdminbaseController {
 
             
             $db = M();
+            $serverUrl=c("SERVER_URL");
             
             for($i=0;$i<count($_POST['post']);$i++)
             {
@@ -212,7 +213,7 @@ class CreatePageController extends AdminbaseController {
                              <tr>
     							<th>'.$label.'</th>
     							<td>
-    								<select  style="width:416px;"  id="'.$ziduan.'" name="post['.$ziduan.']" data-url="'.$select_url.'"   data-value="{$post.'.$ziduan.'}" ></select>
+    								<select  style="width:416px;"  id="'.$ziduan.'" name="post['.$ziduan.']" data-url="'.$select_url.'"   data-value="{$post.'.$ziduan.'}" ></select> '.$zhushiList["info"].'
     							</td>
     						</tr>';
                                
@@ -266,7 +267,7 @@ class CreatePageController extends AdminbaseController {
             							<th>'.$label.'</th>
             							<td>
             							    <span class="upload-col" >选择文件
-            								<input type="file" class="file"  data-type="doc" style="width:400px;" id="'.$ziduan.'"  /><input type="hidden" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}"></span><a target="_blank" class="file-doc" href="{$post.'.$ziduan.'}"></a>
+            								<input type="file" class="file"  data-type="doc" style="width:400px;" id="'.$ziduan.'"  /><input type="hidden" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}"></span><a target="_blank" class="file-doc" href="{$post.'.$ziduan.'}"></a> '.$zhushiList["info"].'
             							</td>
             						</tr>';
                                }
@@ -277,11 +278,10 @@ class CreatePageController extends AdminbaseController {
             							<th>'.$label.'</th>
             							<td>
             							    <span class="upload-col" >选择图片
-            								<input class="file" type="file"  data-type="img" style="width:400px;" id="'.$ziduan.'"  /><input type="hidden" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}"></span><a target="_blank" class="file-img" href="{$post.'.$ziduan.'}"></a>
+            								<input class="file" type="file"  data-type="img" style="width:400px;" id="'.$ziduan.'"  /><input type="hidden" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}"></span><a target="_blank" class="file-img" href="{$post.'.$ziduan.'}"></a> '.$zhushiList["info"].'
             							</td>
             						</tr>';
                                }
-                               
                                
                            }
                            
@@ -292,11 +292,68 @@ class CreatePageController extends AdminbaseController {
                              <tr>
     							<th>'.$label.'</th>
     							<td>
-    								<input type="text" class="laydate" style="width:400px;" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" />
+    								<input type="text" class="laydate" style="width:400px;" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" /> '.$zhushiList["info"].'
     							</td>
     						</tr>';
                                
                            }
+                           
+                             else if($zhushiList["color"])
+                           {
+                               
+                                $createform=$createform.'
+                             <tr>
+    							<th>'.$label.'</th>
+    							<td>
+    								<input type="text" class="picker" style="width:100px;" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" /> '.$zhushiList["info"].'
+    							</td>
+    						</tr>';
+                               
+                           }
+                           
+                            else if($zhushiList["muinput"])
+                           {
+                               
+                               
+                               $div="";
+                               
+                               foreach ($zhushiList["muinput"] as $key=>$value) {
+                                   
+                                   if($key=="upload_img")
+                                   {
+                                        
+                                   
+            							 $div=$div.' <span class="upload-col" >选择图片
+            								<input class="file" type="file"  data-type="img" style="width:400px;"   /><input data-type="hidden" data-name="img" type="hidden" ></span><a target="_blank" class="file-img" href=""></a> ';
+                               
+                                   }
+                                   else{
+                                       $div=$div.'<span class="label-text">'.$value.'</span><input type="text" data-name="'.$key.'" class="'.$key.'">';
+                                   }
+                                   
+                                   
+                                   
+                               
+                              }
+
+                               
+                               
+                            $createform=$createform.'
+                             <tr>
+    							<th>'.$label.'</th>
+    							<td id="'.$ziduan.'Mu" >
+    							
+    							    <input type="hidden" style="width:200px;" class="add-list-hidden" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" />
+    							    
+    							    <div  class="add-list" >
+    							    <div class="add-row">'.$div.'<button type="button" class="small-btn add-btn">新增</button></div>
+    							    </div>
+    							</td>
+    						</tr>';
+                               
+                           }
+                           
+                           
                            else if($zhushiList["textarea"])
                            {
                                
@@ -304,7 +361,7 @@ class CreatePageController extends AdminbaseController {
                              <tr>
     							<th>'.$label.'</th>
     							<td>
-    								<textarea  style="width:400px;" id="'.$ziduan.'" name="post['.$ziduan.']"   >{$post.'.$ziduan.'}</textarea>
+    								<textarea  style="width:400px;" id="'.$ziduan.'" name="post['.$ziduan.']"   >{$post.'.$ziduan.'}</textarea> '.$zhushiList["info"].'
     							</td>
     						</tr>';
                                
@@ -403,13 +460,16 @@ class CreatePageController extends AdminbaseController {
                    
                 }
                 
+                $zhushi1=json_decode($list[0]["zhushi"],1);
+                
+                
                 $tableHeader=$tableHeader.
                 "
-                <th width='70'>操作</th>";
+                <th width='70' class={$zhushi1['caozuo']}>操作</th>";
                 
                 $tableBody=$tableBody.
                         "
-                        <td><a href={:U('{$fileName}/edit',array('id'=>\$vo['".$list[0]['ziduan']."']))}>{:L('EDIT')}</a> |
+                        <td class={$zhushi1['caozuo']}><a href={:U('{$fileName}/edit',array('id'=>\$vo['".$list[0]['ziduan']."']))}>{:L('EDIT')}</a> |
 						<a href={:U('{$fileName}/delete',array('id'=>\$vo['".$list[0]['ziduan']."']))} class='js-ajax-delete'>{:L('DELETE')}</a></td>";
 						
 				$biaoId=$list[0]['ziduan'];
@@ -812,7 +872,7 @@ fwrite($myfile, $houduan);
 
 fclose($myfile);
                 
-                
+
                 
                 $myfile = fopen($path."/add.html", "w");
 		    
@@ -833,13 +893,13 @@ $txt=<<<EOT
 	</li>
 </script>
 </head>
-<body>
+<body data-url="{$serverUrl}">
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li><a href="{:U('{$fileName}/index')}">内容管理</a></li>
 			<li class="active"><a href="{:U('{$fileName}/add')}" target="_self">添加内容</a></li>
 		</ul>
-		<form action="{:U('{$fileName}/add_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<form action="{:U('{$fileName}/add_post')}" id="form" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
 			<div class="row-fluid">
 				<div class="span12">
 					<table class="table table-bordered">
@@ -852,12 +912,13 @@ $txt=<<<EOT
 			
 			</div>
 			<div class="form-actions">
-				<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+				<button class="btn btn-primary js-ajax-submit" type="button" id="submitBtn">提交</button>
 				<a class="btn" href="{:U('{$fileName}/index')}">返回</a>
 			</div>
 		</form>
 	</div>
 	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/main.js"></script>
 	<script type="text/javascript">
 		//编辑器路径定义
 		var editorURL = GV.WEB_ROOT;
@@ -867,6 +928,45 @@ $txt=<<<EOT
 	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
 	<script type="text/javascript">
 		$(function() {
+		
+		    $("#submitBtn").click(function()
+		    {
+		    
+		      
+		      
+		      $(".add-list").each(function()
+		      {
+		          var addJson=[];
+		           $(this).find(".add-row").each(function()
+    		      {
+    		          var obj={};
+    		          $(this).find("input").each(function()
+    		          {
+    		              if($(this).attr("data-type")!="img")
+    		              {
+    		                   obj[$(this).attr("data-name")]=$(this).val();
+    		              }
+    		          
+    		             
+    		          });
+    		          addJson.push(obj);
+    		          
+    		      });
+    		      
+    		      $(this).prev().val(JSON.stringify(addJson));
+    		          
+		      });
+		      
+		     
+		      
+		    
+		    
+		       $("form").submit(); 
+		       
+		       
+		       
+		    });
+		
 			$(".js-ajax-close-btn").on('click', function(e) {
 				e.preventDefault();
 				Wind.use("artDialog", function() {
@@ -1052,14 +1152,14 @@ $addtxt=<<<EOT
 	</li>
 </script>
 </head>
-<body>
+<body data-url="{$serverUrl}">
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li><a href="{:U('{$fileName}/index')}">内容管理</a></li>
 			<li><a href="{:U('{$fileName}/add')}" target="_self">内容添加</a></li>
 			<li class="active"><a href="#">内容编辑</a></li>
 		</ul>
-		<form action="{:U('{$fileName}/edit_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<form action="{:U('{$fileName}/edit_post')}" id="form" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
 			<div class="row-fluid">
 				<div class="span12">
 					<table class="table table-bordered">
@@ -1071,12 +1171,13 @@ $addtxt=<<<EOT
 				</div>
 			</div>
 			<div class="form-actions">
-				<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+				<button class="btn btn-primary js-ajax-submit" type="button" id="submitBtn">提交</button>
 				<a class="btn" href="{:U('{$fileName}/index')}">返回</a>
 			</div>
 		</form>
 	</div>
 	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/main.js"></script>
 	<script type="text/javascript">
 		//编辑器路径定义
 		var editorURL = GV.WEB_ROOT;
@@ -1085,6 +1186,46 @@ $addtxt=<<<EOT
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
 	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
 	<script type="text/javascript">
+	
+	     $("#submitBtn").click(function()
+		    {
+		    
+		      
+		      
+		      $(".add-list").each(function()
+		      {
+		          var addJson=[];
+		           $(this).find(".add-row").each(function()
+    		      {
+    		          var obj={};
+    		          $(this).find("input").each(function()
+    		          {
+    		              if($(this).attr("data-type")!="img")
+    		              {
+    		                   obj[$(this).attr("data-name")]=$(this).val();
+    		              }
+    		          
+    		             
+    		          });
+    		          addJson.push(obj);
+    		          
+    		      });
+    		      
+    		      $(this).prev().val(JSON.stringify(addJson));
+    		          
+		      });
+		      
+		     
+		      
+		    
+		    
+		       $("form").submit(); 
+		       
+		       
+		       
+		    });
+	
+	
 		$(function() {
 			
 			//setInterval(function(){public_lock_renewal();}, 10000);
@@ -1256,7 +1397,7 @@ $indexHtml=<<<EOT
 
 <admintpl file="header" />
 </head>
-<body>
+<body data-url="{$serverUrl}">
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="javascript:;">内容管理</a></li>
@@ -1293,6 +1434,7 @@ $indexHtml=<<<EOT
 	</div>
 	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
 	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/main.js"></script>
 	<script>
 		function refersh_window() {
 			var refersh_time = getCookie('refersh_time');

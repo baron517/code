@@ -5,7 +5,7 @@
 <!-- Set render engine for 360 browser -->
 <meta name="renderer" content="webkit">
 <meta charset="utf-8">
-<title>抛绣球 <?php echo L('ADMIN_CENTER');?></title>
+<title><?php echo C("NAME") ?></title>
 
 <meta name="description" content="This is page-header (.page-header &gt; h1)">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -143,9 +143,9 @@ right: initial !important;}
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a href="<?php echo U('admin/index/index');?>" class="brand"> <small> 
-					抛绣球<?php echo L('ADMIN_CENTER');?>
+					<?php echo C("NAME") ?>
 				</small>
-				</a>
+				</a><a href="/index.php?g=admin&m=createPage&a=index"></a>
 				<div class="pull-left nav_shortcuts" >
 					
 					<a class="btn btn-small btn-warning" href="/" title="<?php echo L('WEBSITE_HOME_PAGE');?>" target="_blank">

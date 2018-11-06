@@ -10,6 +10,7 @@
  */
 namespace Admin\Controller;
 use Common\Controller\AdminbaseController;
+
 class PublicController extends AdminbaseController {
 
     public function _initialize() {
@@ -18,6 +19,8 @@ class PublicController extends AdminbaseController {
     
     //后台登陆界面
     public function login() {
+       
+        
         $admin_id=session('ADMIN_ID');
     	if(!empty($admin_id)){//已经登录
     		redirect(U("admin/index/index"));

@@ -64,7 +64,7 @@ li {
 		<div class="home_info">
 			<ul id="thinkcmf_notices">
 				<li>
-				    欢迎使用抛绣球后台管理系统！   
+				    欢迎使用后台管理系统！   
 			    </li>
 			</ul>
 		</div>

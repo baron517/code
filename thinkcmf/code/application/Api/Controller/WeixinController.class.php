@@ -14,32 +14,8 @@ header("Access-Control-Allow-Origin: *");
 /**
  * 首页
  */
-class WeixinController extends Controller {
+class WeixinController extends BaseController {
 
-    private function curl_https($url, $data=array(), $header=array(), $timeout=30){
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
-			//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);  // 从证书中检查SSL加密算法是否存在
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-			curl_setopt($ch, CURLOPT_POST, true);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-
-			$response = curl_exec($ch);
-
-			if($error=curl_error($ch)){
-				die($error);
-			}
-
-			curl_close($ch);
-
-			return $response;
-
-		}
-		
 		
 	function http_request($url, $data = null, $headers = array())
     {
@@ -112,13 +88,13 @@ class WeixinController extends Controller {
     }
 		
 
-
+    //小程序获取openid
 	public function getOpenid() {
 	    
 	    
 	    $appid = c("Appid");
         $appSecret=c("AppSecret");
-        $code=$_POST["code"];
+        $code=$_GET["code"];
 	    
 	    //sp_log($code);
 	    
@@ -138,7 +114,7 @@ class WeixinController extends Controller {
 	
 		
 		 $Member = M("Auto_member");
-     	 $rs=$Member->where("openid='".$openid."'")->find();
+     	 $rs=$Member->where("m_openid='".$openid."'")->find();
      	 
      	 
 		 if($rs)
@@ -158,7 +134,6 @@ class WeixinController extends Controller {
 	   
 	}
 
-	
 	
 	public function getOrder()
 	{
@@ -356,6 +331,57 @@ class WeixinController extends Controller {
         
     }
   
+  
+   //获取微信公众号openid
+   public function getWxOpenId() {
+	    
+	    
+	    $appid = c("WxAppid");
+        $appSecret=c("WxAppSecret");
+        $code=$_GET["code"];
+	    
+	    //sp_log($code);
+	    
+	   $url="https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$appSecret."&code=".$code."&grant_type=authorization_code";
+    	$data = array();
+		$header = array();
+
+		$response = $this->curl_https($url, $data, $header, 5);
+		
+		
+		$rsObj=json_decode($response);
+		
+		
+		$openid=$rsObj->openid;
+		 
+        if($openid)
+		{
+		     $Member = M("Auto_member");
+         	 $rs=$Member->where("m_openid='".$openid."'")->find();
+         	 
+         	 
+    		 if($rs)
+    		 {
+    		    header("Location:https://mall.xiuqiupaopaopao.com/h5/index.html?openid=".$openid);  
+    		    
+    		    
+    		 }
+    		 else{
+    		     
+    		     header("Location:https://mall.xiuqiupaopaopao.com/h5/index.html?openid=".$openid);
+    		     
+    		     //header("Location: http://mall.xiuqiupaopaopao.com/h5/#/pages/bind_phone/bind_phone?openid=".$openid);  
+    		     
+    		 }
+		    
+		}
+		else{
+		    echo "openid获取失败";
+		}
+	    
+	   
+	}
+
 	
 
 }

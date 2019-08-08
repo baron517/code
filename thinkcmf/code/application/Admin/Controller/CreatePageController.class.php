@@ -212,6 +212,18 @@ class CreatePageController extends AdminbaseController {
                                
                                
                            }
+						   if($zhushiList["datetime"])
+                           {
+                               
+                                   
+                                    $searchHtml=$searchHtml.
+                            '
+                             <span>
+                			<label>'.$label.'</label>
+                			<input type="text" class="laydatetime"  name="post['.$ziduan.']" style="width: 200px;" value="{$post.'.$ziduan.'|default=""}">
+                			</span>'; 
+                               
+                           }
                            else if($zhushiList["select"])
                            {
                                $select_url="";
@@ -369,6 +381,19 @@ class CreatePageController extends AdminbaseController {
     						</tr>';
                                
                            }
+						   
+						    else if($zhushiList["datetime"])
+                           {
+                               
+                                $createform=$createform.'
+                             <tr>
+    							<th>'.$label.'</th>
+    							<td>
+    								<input type="text" class="laydatetime" style="width:400px;" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" /> '.$zhushiList["info"].'
+    							</td>
+    						</tr>';
+                               
+                           }
                            
                              else if($zhushiList["color"])
                            {
@@ -391,20 +416,17 @@ class CreatePageController extends AdminbaseController {
                                
                                foreach ($zhushiList["muinput"] as $key=>$value) {
                                    
-                                   if($key=="upload_img")
+                                  if(strpos($key,'img') !== false)
                                    {
-                                        
                                    
-            							 $div=$div.' <span class="upload-col" >选择图片
-            								<input class="file" type="file"  data-type="img" style="width:400px;"   /><input data-type="hidden" data-name="img" type="hidden" ></span><a target="_blank" class="file-img" href=""></a> ';
+            							 $div=$div.'<span class="detail-col"><span class="upload-col" >选择文件
+            								<input class="file" type="file"  data-type="img" style="width:400px;"   /><input data-type="hidden" data-name="img" type="hidden" class="img-hidden"></span><a target="_blank" class="file-img" href=""></a></span>';
+            								
                                
                                    }
                                    else{
-                                       $div=$div.'<span class="label-text">'.$value.'</span><input type="text" data-name="'.$key.'" class="'.$key.'">';
+                                       $div=$div.'<span class="detail-col"><span class="label-text">'.$value.'</span><input type="text" data-name="'.$key.'" class="'.$key.'"></span>';
                                    }
-                                   
-                                   
-                                   
                                
                               }
 
@@ -415,7 +437,7 @@ class CreatePageController extends AdminbaseController {
     							<th>'.$label.'</th>
     							<td id="'.$ziduan.'Mu" >
     							
-    							    <input type="hidden" style="width:200px;" class="add-list-hidden" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" />
+    							    <input type="hidden" style="width:200px;" class="add-list-hidden" id="'.$ziduan.'" name="post['.$ziduan.']"   value="{$post.'.$ziduan.'}" /><div class="hide add-list-json">{$post.'.$ziduan.'}</div>
     							    
     							    <div  class="add-list" >
     							    <div class="add-row">'.$div.'<button type="button" class="small-btn add-btn">新增</button></div>
@@ -1048,7 +1070,7 @@ $txt=<<<EOT
     		          
     		      });
     		      
-    		      $(this).prev().val(JSON.stringify(addJson));
+    		      $(this).parent().find('.add-list-hidden').val(JSON.stringify(addJson));
     		          
 		      });
 		      
@@ -1270,7 +1292,7 @@ $addtxt=<<<EOT
 	</script>
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
-	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
 	<script type="text/javascript">
 	
 	     $("#submitBtn").click(function()
@@ -1297,7 +1319,7 @@ $addtxt=<<<EOT
     		          
     		      });
     		      
-    		      $(this).prev().val(JSON.stringify(addJson));
+    		      $(this).parent().find('.add-list-hidden').val(JSON.stringify(addJson));
     		          
 		      });
 		      
@@ -1507,7 +1529,7 @@ $indexHtml=<<<EOT
 			<div class="pagination">{\$page}</div>
 		</form>
 	</div>
-	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
 	<script src="__PUBLIC__/js/common.js"></script>
 	<script src="__PUBLIC__/js/main.js"></script>
 	<script>

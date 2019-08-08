@@ -19,12 +19,12 @@ return array(
     "NAME"=>'摄影后台管理',
     
     //小程序
-    "Appid"=>'wx14d40022ef21aaf8',
-    "AppSecret"=>'33f599632b37da0328daedc86d4c27e8',
+    "Appid"=>'',
+    "AppSecret"=>'',
     
     //微信支付
-    "Api"=>'6t4k2icgune9IvZgkinMhXGwVhR85QtF',
-    "Mch_id"=>'1516368681',
+    "Api"=>'',
+    "Mch_id"=>'',
     
     
     

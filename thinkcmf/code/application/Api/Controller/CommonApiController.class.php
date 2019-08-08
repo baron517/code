@@ -16,6 +16,19 @@ header("Access-Control-Allow-Origin: *");
  */
 class CommonApiController extends BaseController  {
 
+	public function getSelectList()
+	{
+	    $tableName=$_GET["table"];
+	    
+	    $db = M();
+	    $sql="select * from ".$tableName;
+	    $list=$db->query($sql);
+	    
+	    echo json_encode($list);
+	    
+	}
+
+
     //上传文件
 	 public function uploadFile()
     {

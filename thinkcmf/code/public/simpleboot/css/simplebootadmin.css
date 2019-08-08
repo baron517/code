@@ -45,9 +45,11 @@ input[readonly]{background:#fff!important;border:1px solid #ccc;}
 .small-btn{border:1px solid #1abc9c;color:#1abc9c;text-align:center;cursor:pointer;background:#fff;margin-left:10px;display:inline-block;padding:5px 10px;}
 .add-btn{color:#fff;background: #1abc9c;}
 .add-row{margin:5px 0;font-size:0;}
-.add-row>span{margin:0 10px;display:inline-block;font-size:12px;}
+.add-row .detail-col{display: inline-block;margin:0 10px 10px 10px;display:inline-block;font-size:12px;width:286px;}
+.add-row .detail-col .label-text{display:inline-block;width:60px;text-align:center;}
 .add-row input{font-size:13px;}
-
+.add-row .detail-col .upload-col{margin-left:60px;}
+.view-video{font-size:16px;position:relative;top:6px;}
 
 
 

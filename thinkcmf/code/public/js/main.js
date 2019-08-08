@@ -17,9 +17,9 @@ function addJS(Url)
 }
 
 
-addCSS("/public/js/color/colpick.css");
+addCSS("public/js/color/colpick.css");
 
-addJS("/public/js/color/colpick.js");
+addJS("public/js/color/colpick.js");
 
 
 
@@ -78,14 +78,15 @@ $(".status-text .hide").each(function()
 
 
 //编辑新增的多个表单处理
-$(".add-list-hidden").each(function()
+$(".add-list-json").each(function()
 {
     
-    if($(this).val())
+    if($(this).text())
     {
-         var objList=JSON.parse($(this).val());
+         
+     var objList=JSON.parse($(this).text());
     
-    console.log(objList);
+     console.log(objList);
     
     
     for(var i=0;i<objList.length;i++)
@@ -94,32 +95,32 @@ $(".add-list-hidden").each(function()
         var h=0;
         var html="";
         
-        
-      
+            console.log(objList[i]);
             
              for(var j in objList[i]) {
                  
+                 console.log(j);
                  
                  if(i==0)
                  {
-                     var inputObj=$(this).next().find(".add-row").eq(0).find("input").eq(h);
+                     var inputObj=$(this).next().find(".add-row").eq(0).find("."+j);
                      
-                     if(j!="img")
+                     if(j.indexOf("img")==-1)
                      {
                           $(inputObj).val(objList[i][j]);
                      }
                      else
                      {
-                         $(this).next().find(".add-row").eq(0).find("input[type=hidden]").val(objList[i][j]);
+                         $(this).next().find(".add-row").eq(0).find(".img-hidden").val(objList[i][j]);
                          $(this).next().find(".add-row").eq(0).find(".file-img").attr("href",objList[i][j]);
                          
                          if(objList[i][j].indexOf(".mp4")>-1)
                          {
-                             $(this).next().find(".add-row").eq(0).find(".file-img").append('<span class="view-video">查看视频</span>');
+                             $(this).next().find(".add-row").eq(0).find("."+j+"-file-img").append('<span class="view-video">查看视频</span>');
                          }
                          else
                          {
-                             $(this).next().find(".add-row").eq(0).find(".file-img").append("<img style='max-width:120px;' src='"+objList[i][j]+"'>");
+                             $(this).next().find(".add-row").eq(0).find("."+j+"-file-img").append("<img style='max-width:90px;' src='"+objList[i][j]+"'>");
                          }
                          
                          
@@ -133,16 +134,16 @@ $(".add-list-hidden").each(function()
                  else
                  {
                    
-                    if(j!="img")
-                     {
+                    if(j.indexOf("img")==-1)
+                    {
                            var labelText=$(this).next().find(".add-row").eq(0).find(".label-text").eq(h).text();    
-                         html=html+"<span class='label-text'>"+labelText+"</span><input data-name='"+j+"' value='"+objList[i][j]+"' type='text'>";
+                         html=html+"<span class='detail-col'><span class='label-text'>"+labelText+"</span><input data-name='"+j+"' class='"+j+"' value='"+objList[i][j]+"' type='text'></span>";
                      }
                      else
                      {
                          
                          
-                     html=html+'<span class="upload-col">选择文件<input class="file" type="file" data-type="img" style="width:400px;"><input data-name="img" data-type="hidden" value="'+objList[i][j]+'" type="hidden"></span><a target="_blank" class="file-img" href="'+objList[i][j]+'"><img style="max-width:120px;" src="'+objList[i][j]+'"></a>';
+                     html=html+'<span class="detail-col"><span class="upload-col">选择文件<input class="file" type="file" data-type="img" style="width:400px;"><input data-name="img" data-type="hidden" value="'+objList[i][j]+'" class="'+j+'-hidden" type="hidden"></span><a target="_blank" class="file-img" href="'+objList[i][j]+'"><img style="max-width:90px;" src="'+objList[i][j]+'"></a></span>';
                          
                      }
                    
@@ -176,12 +177,12 @@ $(".add-btn").click(function()
         {
             if($(this).attr("data-type")=="img")
             {
-                html=html+'<span class="upload-col">选择文件<input class="file" type="file" data-type="img" style="width:400px;"><input data-type="hidden" data-name="img" type="hidden"></span><a target="_blank" class="file-img" href=""></a>';
+                html=html+'<span class="detail-col"><span class="upload-col">选择文件<input class="file" type="file" data-type="img" style="width:400px;"><input data-type="hidden" data-name="img" type="hidden"></span><a target="_blank" class="file-img" href=""></a></span>';
             }
         }
         else
         {
-            html=html+"<span class='label-text'>"+$(this).prev().text()+"</span><input class='"+$(this).attr('class')+"' data-name="+$(this).attr("data-name")+" type='text'>";
+            html=html+"<span class='detail-col'><span class='label-text'>"+$(this).prev().text()+"</span><input class='"+$(this).attr('class')+"' data-name="+$(this).attr("data-name")+" type='text'></span>";
         }
         
         
@@ -279,7 +280,7 @@ $(function()
     {
          $.ajax({
            type: "GET",
-           url: "/index.php?g=Api&m=CommonApi&a=getSelectList",
+           url: "index.php?g=Api&m=CommonApi&a=getSelectList",
            dataType:"json",
            data:{table:"tb_users"},
            success: function(data){
@@ -393,7 +394,7 @@ $(function()
         {
            $.ajax({
            type: "GET",
-           url: "/index.php?g=Api&m=CommonApi&a=getSelectList",
+           url: "index.php?g=Api&m=CommonApi&a=getSelectList",
            dataType:"json",
            data:{table:$(this).attr("data-url")},
            success: function(data){
@@ -513,7 +514,7 @@ $(function()
             }
             else
             {
-                 $(this).html("<img src='"+$(this).attr("href")+"' style='max-width:120px;'/>");
+                 $(this).html("<img src='"+$(this).attr("href")+"' style='max-width:90px;'/>");
             }
             
         }
@@ -538,10 +539,12 @@ $(function()
         
          var imageForm = new FormData();
         imageForm.append("file",$(this).get(0).files[0]);
+		
+		var layerIndex = layer.load(0, {   shade: [0.5,'#000'] });
     
         $.ajax({
            type: "POST",
-           url: "/index.php?g=Api&m=CommonApi&a=uploadFile",
+           url: "index.php?g=Api&m=CommonApi&a=uploadFile",
            dataType:"json",
            processData: false,
            contentType: false,
@@ -563,7 +566,7 @@ $(function()
                            }
                            else
                            {
-                               $that.parent().next().html("<img src='"+data.data.url+"' style='max-width:120px;'/>");
+                               $that.parent().next().html("<img src='"+data.data.url+"' style='max-width:90px;'/>");
                                $that.parent().next().attr("href",data.data.url);
                                $that.next().val(data.data.url);
                               
@@ -587,6 +590,8 @@ $(function()
                        }
                        
                    }
+				   
+				   layer.close(layerIndex);
                    
                    
               }

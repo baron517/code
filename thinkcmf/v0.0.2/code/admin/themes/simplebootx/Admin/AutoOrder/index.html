@@ -1,0 +1,166 @@
+
+<admintpl file="header" />
+</head>
+<body data-url="http://fawu.pro.youzewang.com">
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">内容管理</a></li>
+			<li><a href="{:U('AutoOrder/add')}" target="_self">添加内容</a></li>
+		</ul>
+		<form class="well form-search form-search-col clearfix" method="post" action="{:U('AutoOrder/index')}">
+		
+		   
+                             <span>
+                			<label>订单编号</label>
+                			<input type="text" name="post[out_trade_no]" style="width: 200px;" value="{$post.out_trade_no|default=""}">
+                			</span>
+                             <span>
+                			<label>手机</label>
+                			<input type="text" name="post[jz_phone]" style="width: 200px;" value="{$post.jz_phone|default=""}">
+                			</span>
+		
+			<span>
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('AutoOrder/index')}">清空</a>
+			
+			</span>
+		</form>
+		<form class="js-ajax-form" action="" method="post">
+
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+					
+						
+                        <th>ID</th>
+                                <th >订单编号</th>
+                                <th >金额</th>
+                                <th >openid</th>
+                                <th >中文类型名称</th>
+                                <th >英文类型名称</th>
+                                <th >套餐名称</th>
+                                <th >预约时间</th>
+                                <th >下单时间</th>
+                                <th >状态</th>
+                                <th >家长称呼</th>
+                                <th >手机</th>
+                                <th >邮箱</th>
+                                <th >宝宝姓名</th>
+                                <th >宝宝小名</th>
+                                <th >性别</th>
+                                <th >生日</th>
+                                <th >收件地址</th>
+                                <th >收件地址</th>
+                                <th >联系电话</th>
+                                <th >是否同意展示</th>
+                <th width='70' class=hide>操作</th>
+					</tr>
+				</thead>
+			    <foreach name="posts" item="vo">
+			    <tr>
+			     
+                        <td>{$vo.o_id}</td>
+                                <td>{$vo.out_trade_no}</td>
+                                <td>{$vo.o_money}</td>
+                                <td>{$vo.o_openid}</td>
+                                <td>{$vo.o_type_zw}</td>
+                                <td>{$vo.o_type_yw}</td>
+                                <td>{$vo.o_taocan}</td>
+                                <td>{$vo.o_time}</td>
+                                <td>{$vo.o_create_time}</td>
+                                <td>{$vo.o_status}</td>
+                                <td>{$vo.jiazhang_name}</td>
+                                <td>{$vo.jz_phone}</td>
+                                <td>{$vo.email}</td>
+                                <td>{$vo.bb_name}</td>
+                                <td>{$vo.bb_xiaoming}</td>
+                                <td>{$vo.bb_sex}</td>
+                                <td>{$vo.bb_birthday}</td>
+                                <td>{$vo.address}</td>
+                                <td>{$vo.sj_name}</td>
+                                <td>{$vo.lx_phone}</td>
+                                <td>{$vo.is_agree}</td>
+                        <td class=hide><a href={:U('AutoOrder/edit',array('id'=>$vo['o_id']))}>{:L('EDIT')}</a> |
+						<a href={:U('AutoOrder/delete',array('id'=>$vo['o_id']))} class='js-ajax-delete'>{:L('DELETE')}</a></td>
+			    </tr>
+			    </foreach>
+			    
+			</table>
+
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/select2/js/select2.min.js"></script>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/main.js"></script>
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量复制
+				$('.js-articles-copy').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("__ROOT__/index.php?g=portal&m=AdminPost&a=copy&ids="+ ids, {
+						title : "批量复制",
+						width : "300px"
+					});
+				});
+				//批量移动
+				$('.js-articles-move').click(function(e) {
+					var ids=[];
+					$("input[name='ids[]']").each(function() {
+						if ($(this).is(':checked')) {
+							ids.push($(this).val());
+						}
+					});
+					
+					if (ids.length == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					
+					ids= ids.join(',');
+					art.dialog.open("__ROOT__/index.php?g=portal&m=AdminPost&a=move&old_term_id={$term.term_id|default=0}&ids="+ ids, {
+						title : "批量移动",
+						width : "300px"
+					});
+				});
+			});
+		});
+	</script>
+</body>
+</html>

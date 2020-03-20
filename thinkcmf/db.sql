@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : meiye_47.99.106.117
+Source Server         : 106.14.44.160_猎铺人
 Source Server Version : 50558
-Source Host           : 47.99.106.117:3306
-Source Database       : sheying
+Source Host           : 106.14.44.160:3306
+Source Database       : huodong
 
 Target Server Type    : MYSQL
 Target Server Version : 50558
 File Encoding         : 65001
 
-Date: 2018-11-06 13:46:53
+Date: 2020-01-30 11:23:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -86,7 +86,7 @@ CREATE TABLE `tb_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=179 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=180 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
 
 -- ----------------------------
 -- Records of tb_auth_rule
@@ -267,6 +267,27 @@ INSERT INTO `tb_auth_rule` VALUES ('175', 'Admin', 'admin_url', 'admin/autolunbo
 INSERT INTO `tb_auth_rule` VALUES ('176', 'Admin', 'admin_url', 'admin/autotype/index', null, '分类管理', '1', '');
 INSERT INTO `tb_auth_rule` VALUES ('177', 'Admin', 'admin_url', 'admin/automember/index', null, '用户管理', '1', '');
 INSERT INTO `tb_auth_rule` VALUES ('178', 'Admin', 'admin_url', 'admin/autoorder/index', null, '订单管理', '1', '');
+INSERT INTO `tb_auth_rule` VALUES ('179', 'Admin', 'admin_url', 'admin/autoconfig/index', null, '配置管理', '1', '');
+
+-- ----------------------------
+-- Table structure for tb_auto_config
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_auto_config`;
+CREATE TABLE `tb_auto_config` (
+  `c_id` int(255) NOT NULL AUTO_INCREMENT COMMENT '{"name":"ID"}',
+  `c_type` int(2) DEFAULT '1' COMMENT '{"name":"表单形式","table_hide":1,"select":1,"type":{"1":"输入框","2":"文本框","3":"文件上传","4":"编辑器"}}\r\n\r\n',
+  `c_name` varchar(255) DEFAULT NULL COMMENT '{"name":"名称","search":1}',
+  `c_key` varchar(255) DEFAULT NULL COMMENT '{"name":"key值"}',
+  `c_explain` text COMMENT '{"name":"说明","textarea":1,"table_hide":1}',
+  `c_value` text NOT NULL COMMENT '{"name":"value值"}',
+  PRIMARY KEY (`c_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='{"no_create":1}';
+
+-- ----------------------------
+-- Records of tb_auto_config
+-- ----------------------------
+INSERT INTO `tb_auto_config` VALUES ('40', '1', '分享标题', 'biaoti', '', '图片合成');
+INSERT INTO `tb_auto_config` VALUES ('41', '1', '分享描述', 'miaoshu', '', '分享描述');
 
 -- ----------------------------
 -- Table structure for tb_auto_lunbo
@@ -291,11 +312,11 @@ INSERT INTO `tb_auto_lunbo` VALUES ('34', '轮播2', 'https://sy.pro.youzewang.c
 DROP TABLE IF EXISTS `tb_auto_member`;
 CREATE TABLE `tb_auto_member` (
   `m_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '{"name":"ID","caozuo":"hide"}',
-  `username` varchar(100) NOT NULL COMMENT '{"name":"微信昵称","search":1}',
-  `avatar` varchar(100) NOT NULL COMMENT '{"name":"头像"}',
-  `sex` varchar(100) NOT NULL COMMENT '{"name":"性别"}',
-  `openid` varchar(100) NOT NULL COMMENT '{"name":"openid"}',
-  `phone` varchar(100) NOT NULL COMMENT '{"name":"手机","search":1}',
+  `m_name` varchar(100) NOT NULL COMMENT '{"name":"微信昵称","search":1}',
+  `m_avatar` varchar(100) NOT NULL COMMENT '{"name":"头像"}',
+  `m_sex` varchar(100) NOT NULL COMMENT '{"name":"性别"}',
+  `m_openid` varchar(100) NOT NULL COMMENT '{"name":"openid"}',
+  `m_phone` varchar(100) NOT NULL COMMENT '{"name":"手机","search":1}',
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
@@ -489,7 +510,7 @@ CREATE TABLE `tb_menu` (
   KEY `status` (`status`),
   KEY `parentid` (`parentid`),
   KEY `model` (`model`)
-) ENGINE=MyISAM AUTO_INCREMENT=192 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=193 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of tb_menu
@@ -668,6 +689,7 @@ INSERT INTO `tb_menu` VALUES ('188', '0', 'Admin', 'AutoLunbo', 'index', '', '1'
 INSERT INTO `tb_menu` VALUES ('189', '0', 'Admin', 'AutoType', 'index', '', '1', '1', '分类管理', 'tags', '', '0');
 INSERT INTO `tb_menu` VALUES ('190', '0', 'Admin', 'AutoMember', 'index', '', '1', '1', '用户管理', 'user', '', '0');
 INSERT INTO `tb_menu` VALUES ('191', '0', 'Admin', 'AutoOrder', 'index', '', '1', '1', '订单管理', 'shopping-cart', '', '0');
+INSERT INTO `tb_menu` VALUES ('192', '0', 'Admin', 'AutoConfig', 'index', '', '1', '1', '配置管理', 'cog', '', '0');
 
 -- ----------------------------
 -- Table structure for tb_nav
@@ -1029,4 +1051,4 @@ CREATE TABLE `tb_users` (
 -- ----------------------------
 -- Records of tb_users
 -- ----------------------------
-INSERT INTO `tb_users` VALUES ('1', 'admin', '###9441c6fc947a78c8a3d00e64f81833be', 'admin', '450175465@qq.com', '', null, '0', '2000-01-01', null, '27.115.97.14', '2018-11-06 13:42:45', '2018-06-04 10:08:03', '', '1', '0', '1', '0', '');
+INSERT INTO `tb_users` VALUES ('1', 'admin', '###9441c6fc947a78c8a3d00e64f81833be', 'admin', '450175465@qq.com', '', null, '0', '2000-01-01', null, '113.222.125.203', '2020-01-30 11:16:25', '2018-06-04 10:08:03', '', '1', '0', '1', '0', '');

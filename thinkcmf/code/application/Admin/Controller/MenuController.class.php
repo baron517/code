@@ -78,7 +78,8 @@ class MenuController extends AdminbaseController {
     // 后台所有菜单列表
     public function lists(){
     	session('admin_menu_index','Menu/lists');
-    	$result = $this->menu_model->order(array("app" => "ASC","model" => "ASC","action" => "ASC"))->select();
+		$data["name"]=array("neq","未知");
+    	$result = $this->menu_model->where($data)->order(array("app" => "ASC","model" => "ASC","action" => "ASC"))->select();
     	$this->assign("menus",$result);
     	$this->display();
     }
@@ -503,7 +504,7 @@ class MenuController extends AdminbaseController {
     										$data['action']=$a;
     										$data['type']="1";
     										$data['status']="0";
-    										$data['name']="未知";
+    										$data['name']="其他权限";
     										$data['listorder']="0";
     										$result=$this->menu_model->add($data);
     										if($result!==false){

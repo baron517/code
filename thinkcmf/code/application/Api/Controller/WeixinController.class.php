@@ -114,11 +114,18 @@ class WeixinController extends BaseController {
 	
 		
 		 $Member = M("Auto_member");
-     	 $rs=$Member->where("m_openid='".$openid."'")->find();
+     	 $rs=$Member->where("openid='".$openid."'")->find();
      	 
      	 
 		 if($rs)
 		 {
+			 
+			$saveData["token"]=$this->getToken();
+		    $saveData["expire_time"]=date('Y-m-d H:i:s',strtotime('+30 day'));
+		    $Member->where("m_openid='".$openid."'")->save($saveData);
+		    
+		    $rs=$Member->where("m_openid='".$openid."'")->find();
+			 
 		    $rsObj->exist=1; 
 		    $rsObj->user_info=$rs;
 		    

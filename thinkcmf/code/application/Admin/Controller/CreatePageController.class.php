@@ -232,6 +232,12 @@ class CreatePageController extends AdminbaseController {
                                    $select_url=$zhushiList["select_url"];
                                }
                                
+                               $select2="select";
+                               if($zhushiList["select2"])
+                               {
+                                   $select2="select2";
+                               }
+                               
                                $optionHtml="";
                                
                                
@@ -240,7 +246,7 @@ class CreatePageController extends AdminbaseController {
                             '
                              <span>
                 			<label>'.$label.'</label>
-                			<select type="text" id="'.$ziduan.'"  name="post['.$ziduan.']" style="width: 216px;" data-url="'.$select_url.'"  data-value="{$post.'.$ziduan.'|default=""}"><option></option></select>
+                			<select type="text" id="'.$ziduan.'" class="'.$select2.'"  name="post['.$ziduan.']" style="width: 216px;" data-url="'.$select_url.'"  data-value="{$post.'.$ziduan.'|default=""}"><option></option></select>
                 			</span>';
                                
                            }
@@ -275,18 +281,26 @@ class CreatePageController extends AdminbaseController {
                                    $select_url=$zhushiList["select_url"];
                                }
                                
+                               
                                $selectHtml="";
                                if($zhushiList["type"])
                                {
                                    $selectHtml="<span class='hide select-html'>".json_encode($zhushiList["type"],JSON_UNESCAPED_UNICODE)."</span>";
                                }
                                
+                               $select2="select";
+                               if($zhushiList["select2"])
+                               {
+                                   $select2="select2";
+                               }
+                               
+                               
                                 $createform=$createform.'
                              <tr>
     							<th>'.$label.'</th>
     							<td>
     							'.$selectHtml.'
-    								<select  style="width:416px;"  id="'.$ziduan.'" name="post['.$ziduan.']" data-url="'.$select_url.'"   data-value="{$post.'.$ziduan.'}" ></select> '.$zhushiList["info"].'
+    								<select  style="width:416px;" class="'.$select2.'"  id="'.$ziduan.'" name="post['.$ziduan.']" data-url="'.$select_url.'"   data-value="{$post.'.$ziduan.'}" ></select> '.$zhushiList["info"].'
     							</td>
     						</tr>';
                                
@@ -1042,7 +1056,8 @@ $txt=<<<EOT
 	</script>
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
-	<script type="text/javascript" src="/public/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 		
@@ -1293,6 +1308,7 @@ $addtxt=<<<EOT
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/select2/js/select2.min.js"></script>
 	<script type="text/javascript">
 	
 	     $("#submitBtn").click(function()
@@ -1530,6 +1546,7 @@ $indexHtml=<<<EOT
 		</form>
 	</div>
 	<script type="text/javascript" src="__PUBLIC__/js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/select2/js/select2.min.js"></script>
 	<script src="__PUBLIC__/js/common.js"></script>
 	<script src="__PUBLIC__/js/main.js"></script>
 	<script>

@@ -37,7 +37,7 @@ class CommonApiController extends BaseController  {
           return end(explode('.', $file));
         }
         
-        $DST_DIR = 'data/upload/'.time();  
+        $DST_DIR = 'data/upload/'.time().mt_rand(10,100);  
         if ($_FILES['file']['name'] == '')
         {  
             

@@ -13,7 +13,7 @@ padding: 20px 20px 70px;
 .upload-col{width:120px;vertical-align: middle;height:30px;line-height:30px;font-size:16px;position:relative;display:inline-block;overflow:hidden;border:1px solid #1abc9c;color:#1abc9c;text-align:center;cursor:pointer;}
 .file-doc{line-height:30px;vertical-align: middle;display:inline-block;margin-left:10px;}
 .form-search-col{clear: both;}
-.form-search-col span{display: block;float:left;margin-bottom:5px;}
+.form-search-col>span{display: block;float:left;margin-bottom:5px;}
 .form-search-col label{display: inline-block;text-align:right;padding:0 15px;width:80px;text-align:center;}
 .form-search-col input.btn{margin-left:30px;}
 .form-search-col .btn{margin:0 5px;}
@@ -52,8 +52,15 @@ input[readonly]{background:#fff!important;border:1px solid #ccc;}
 .view-video{font-size:16px;position:relative;top:6px;}
 
 
+.select2.select2-container--default .select2-selection--single{
+    border: 2px solid #dce4ec;
+    border-radius: 3px;
+    height:34px;
+}
 
-
+.select2.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 34px;
+}
 
 
 

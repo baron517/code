@@ -8,6 +8,14 @@
 			<li><a href="{:U('rbac/roleadd')}">{:L('ADMIN_RBAC_ROLEADD')}</a></li>
 			<li class="active"><a href="javascript:;">{:L('ADMIN_RBAC_AUTHORIZE')}</a></li>
 		</ul>
+		
+		<div style="margin-top:-8px;padding-bottom:10px;padding-left:6px;">其他权限
+		
+		<input style="position:relative;top:-2px;width:14px;height:14px;" id="checkAll" type="checkbox" />
+		
+		</div>
+		
+		
 		<form class="js-ajax-form" action="{:U('rbac/authorize_post')}" method="post">
 			<div class="table_full">
 				<table class="table table-bordered" id="authrule-tree">
@@ -24,6 +32,25 @@
 		</form>
 	</div>
 	<script type="text/javascript">
+	
+	$("#checkAll").click(function()
+	{
+	    $("#authrule-tree td").each(function()
+	    {
+	        var text=$(this).text().trim();
+	        if(text=="其他权限"){
+	            if($("#checkAll").prop("checked")){
+	                $(this).parent().find("input").prop("checked","checked");
+	            }
+	            else{
+	                $(this).parent().find("input").removeProp("checked");
+	            }
+	            
+	        }
+	    });
+	    
+	});
+	
 	var ajaxForm_list = $('form.js-ajax-form');
 	if (ajaxForm_list.length) {
 	    Wind.use('ajaxForm', 'artDialog', function () {

@@ -93,8 +93,9 @@ class RbacController extends AdminbaseController {
     	}
     }
 
-    // 角色授权
+     // 角色授权
     public function authorize() {
+        
         $this->auth_access_model = D("Common/AuthAccess");
        //角色ID
         $roleid = I("get.id",0,'intval');
@@ -106,8 +107,13 @@ class RbacController extends AdminbaseController {
         $menu->icon = array('│ ', '├─ ', '└─ ');
         $menu->nbsp = '&nbsp;&nbsp;&nbsp;';
         $result = $this->initMenu();
+        
         $newmenus=array();
-        $priv_data=$this->auth_access_model->where(array("role_id"=>$roleid))->getField("rule_name",true);//获取权限表数据
+        
+        $findData["role_id"]=$roleid;
+        
+        $priv_data=$this->auth_access_model->where($findData)->getField("rule_name",true);//获取权限表数据
+        
         foreach ($result as $m){
         	$newmenus[$m['id']]=$m;
         }
@@ -118,10 +124,23 @@ class RbacController extends AdminbaseController {
         	$result[$n]['style'] = empty($t['parentid']) ? '' : 'display:none;';
         	$result[$n]['parentid_node'] = ($t['parentid']) ? ' class="child-of-node-' . $t['parentid'] . '"' : '';
         }
+        
+        $list=[];
+        for($i=0;$i<count($result);$i++)
+        {
+            if($result[$i]["name"]!="未知")
+            {
+                $list[count($list)]=$result[$i];
+            }
+            
+        }
+        
         $str = "<tr id='node-\$id' \$parentid_node  style='\$style'>
                    <td style='padding-left:30px;'>\$spacer<input type='checkbox' name='menuid[]' value='\$id' level='\$level' \$checked onclick='javascript:checknode(this);'> \$name</td>
     			</tr>";
-        $menu->init($result);
+    			
+    			
+        $menu->init($list);
         $categorys = $menu->get_tree(0, $str);
         
         $this->assign("categorys", $categorys);

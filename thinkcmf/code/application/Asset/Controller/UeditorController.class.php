@@ -105,7 +105,13 @@ class UeditorController extends Controller {
 				));
 			}
 		} else {
-			exit($result) ;
+		    
+		    $result=json_decode($result,1);
+		    
+		    if($result["url"]){
+		        $result["url"]=c("SERVER_URL").$result["url"];
+		    }
+			echo json_encode($result);
 		}
 	}
 	

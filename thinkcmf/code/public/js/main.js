@@ -77,6 +77,48 @@ $(".status-text .hide").each(function()
 });
 
 
+$("body").on("change",".import-col .file",function()
+    {
+        
+        console.log($(this));
+        var $that=$(this);
+        
+         var imageForm = new FormData();
+        imageForm.append("file",$(this).get(0).files[0]);
+		
+		var layerIndex = layer.load(0, {   shade: [0.5,'#000'] });
+    
+        $.ajax({
+           type: "POST",
+           url: $(this).attr("data-url"),
+           dataType:"json",
+           processData: false,
+           contentType: false,
+           data: imageForm,
+           success: function(data){
+                   
+                   console.log(data);
+                   if(data.code=1000)
+                   {
+                       
+                       layer.alert("导入成功");
+                       setTimeout(function() {
+                           window.location.reload();
+                       }, 1000);
+                   }
+				   else
+				   {
+				       layer.alert("导入成功");
+				   }
+				   
+                   
+                   
+              }
+        });
+        
+    });
+
+
 //编辑新增的多个表单处理
 $(".add-list-json").each(function()
 {
@@ -377,10 +419,11 @@ $(function()
     $(".laydate-range").each(function()
     {
         var $that=$(this)[0];
-        laydate.render({
-          elem: $that,
-          range: true
-        });
+       
+	    laydate.render({
+              elem: $that,
+              range: true
+            });
         
     });
     
@@ -602,5 +645,9 @@ $(function()
     });
     
     
+    //select2
+    $(".select2").select2({
+      tags: true
+    });
     
 });

@@ -18,12 +18,119 @@ use Aliyun\DySDKLite\SignatureHelper;
 
 header("Access-Control-Allow-Origin: *");
 
+
 /**
  * 首页
  */
 class BaseController extends Controller {
     
     
+	 function _initialize() {
+        
+        $HTTP_TOKEN=$_SERVER['HTTP_TOKEN'];
+        $HTTP_TIMESTAMP=$_SERVER['HTTP_TIMESTAMP'];
+        $HTTP_SIGN=$_SERVER['HTTP_SIGN'];
+        
+        if(!$HTTP_TIMESTAMP){
+            $res["code"]=2002;
+            $res["msg"]="时间戳不能为空";
+            echo json_encode($res);
+            exit();
+        }
+        
+        
+        $private_key="41fd220f05ed0d8c56e3b83af87d45d7";
+        $timestamp=$_SERVER['HTTP_TIMESTAMP'];
+        $cha=time()-$timestamp;
+        
+        if($cha>5*600){
+            $res["code"]=2005;
+            $res["msg"]="接口已经失效";
+            echo json_encode($res);
+            exit();
+        }
+        
+        
+        //签名规则
+        //sign=md5(timestamp=424234234&private_key=41fd220f05ed0d8c56e3b83af87d45d7) 
+        
+        
+        if(!$HTTP_SIGN){
+            $res["code"]=2003;
+            $res["msg"]="接口签名不能为空";
+            echo json_encode($res);
+            exit();
+        }
+        
+        $sign=md5("timestamp=".$timestamp."&private_key=".$private_key);
+        
+        if($sign!=$HTTP_SIGN){
+            
+             $res["code"]=2006;
+            $res["msg"]="接口签名不正确";
+            echo json_encode($res);
+            exit();
+            
+        }
+        
+        
+        $noTokenList=["getOpenid"];
+        
+        
+        if(!in_array(ACTION_NAME,$noTokenList)){
+            
+              if(!$HTTP_TOKEN){
+                    $res["code"]=2004;
+                    $res["msg"]="token不能为空";
+                    echo json_encode($res);
+                    exit();
+                }
+                else{
+                    
+                    if(!$this->isToken($HTTP_TOKEN)){
+                        
+                        $res["code"]=2004;
+                        $res["msg"]="token不正确或者已经失效";
+                        echo json_encode($res);
+                        exit();
+                        
+                        
+                    }
+                    
+                }
+            
+        }
+        
+        
+        
+    }
+    
+    
+    public function getToken(){
+        
+        $str = md5(uniqid(md5(microtime(true)).mt_rand(100,999),true));
+        $str = sha1($str);  //加密
+        return $str;
+        
+    }
+    
+    public function isToken($token){
+        
+        $M=M("Auto_member");
+        $data["token"]=$token;
+        $time=date("Y-m-d H:i:s");
+        $data["expire_time"]=array("gt",$time);
+        $rs=$M->where($data)->find();
+        if($rs){
+            return true;
+        }
+        else{
+            return false;
+        }    
+        
+    }
+	
+	
     //阿里短信接口
 	public function sendMobileMsg($phone,$TemplateCode,$bianliang)
 	{
